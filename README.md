@@ -1,4 +1,5 @@
 - [Nest-Cookies](#nest-cookies)
+  - [Installation](#installation)
   - [Using the Module](#using-the-module)
   - [CookiesInterceptor](#cookiesinterceptor)
   - [Setting Cookies](#setting-cookies)
@@ -8,6 +9,18 @@
 # Nest-Cookies
 
 A module for adding cookie support for both Fastify and Express adapters for NestJS. There's a bit of magic that goes on under the hood when it comes to binding the cookie parser, but this module uses nothing except for what Nest itself provides, meaning no extra middleware, no extra functions, just plain, simple code. Depending on if the Fastify adapter is being used or the Express one, a request hook is added or a middleware is setup. This is for parsing incoming cookies from the `Cookie` header to make them available. And unlike using Nest middleware on the Fastify Adapter, by using a request hook we are able to keep the `req.cookies` on the top level regardless of the adapter. :fireworks:
+
+## Installation
+
+To install the package, use your package manager of choice and install `nest-cookies`
+
+E.g.
+
+```sh
+npm i nest-cookies
+yarn add nest-cookies
+pnpm i nest-cookies
+```
 
 ## Using the Module
 
