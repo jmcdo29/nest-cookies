@@ -4,8 +4,6 @@ import {
   Injectable,
   NestInterceptor,
 } from '@nestjs/common';
-import { Response } from 'express';
-import { FastifyReply } from 'fastify';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { Cookie, NestCookieRequest } from './cookie.interface';
@@ -58,7 +56,10 @@ export class CookiesInterceptor implements NestInterceptor {
 
   public getRequestResponse(
     context: ExecutionContext,
-  ): { req: NestCookieRequest; res: Response | FastifyReply } {
+  ): {
+    req: NestCookieRequest<unknown>;
+    res: { header: (key: string, value: string[]) => void };
+  } {
     const http = context.switchToHttp();
     return { req: http.getRequest(), res: http.getResponse() };
   }

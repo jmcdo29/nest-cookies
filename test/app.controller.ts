@@ -8,13 +8,13 @@ export class AppController {
   constructor(private readonly appService: AppService) {}
 
   @Get()
-  getHello(@Req() req: NestCookieRequest): string {
+  getHello(@Req() req: NestCookieRequest<unknown>): string {
     console.log(req.cookies);
     return this.appService.getHello();
   }
 
   @Get('add-cookie')
-  addCookie(@Req() req: NestCookieRequest): string {
+  addCookie(@Req() req: NestCookieRequest<unknown>): string {
     const expires = new Date();
     expires.setDate(expires.getDate() + 1);
     req._cookies = [

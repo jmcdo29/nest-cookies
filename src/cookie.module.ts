@@ -35,7 +35,11 @@ export class CookieModule implements OnModuleInit, NestModule {
     return this.adapterHost.httpAdapter.getType() === 'fastify';
   }
 
-  private parseCookies(req: NestCookieRequest, res, next): void {
+  private parseCookies(
+    req: NestCookieRequest<{ headers: Record<string, any> }>,
+    res,
+    next,
+  ): void {
     req._cookies = [];
     req.cookies = {};
     const cookieHeader: string = req.headers['cookie'] ?? '';
