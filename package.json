@@ -1,6 +1,6 @@
 {
   "name": "nest-cookies",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "A module to work with setting and reading cookies in NestJS",
   "keywords": [
     "NestJS",

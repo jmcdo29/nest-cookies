@@ -1,3 +1,9 @@
+## [1.2.1](https://github.com/jmcdo29/nest-cookies/compare/v1.2.0...v1.2.1) (2020-11-17)
+
+### Bug Fixes
+
+- **interceptor:** really fixes undefined options ([e0a1f09](https://github.com/jmcdo29/nest-cookies/commit/e0a1f09fbabbb7adac3dbc2f747b93e8a4774a39))
+
 # [1.2.0](https://github.com/jmcdo29/nest-cookies/compare/v1.1.0...v1.2.0) (2020-11-17)
 
 ### Bug Fixes
