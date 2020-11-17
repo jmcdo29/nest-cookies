@@ -1,3 +1,9 @@
+# [1.2.0](https://github.com/jmcdo29/nest-cookies/compare/v1.1.0...v1.2.0) (2020-11-17)
+
+### Bug Fixes
+
+- **interceptor:** fixes is the `options` on cookie are not set ([b06eac9](https://github.com/jmcdo29/nest-cookies/commit/b06eac918c81667f9ab854d0c51d089f3094e4f7)), closes [#4](https://github.com/jmcdo29/nest-cookies/issues/4)
+
 # 1.1.0 (2020-11-17)
 
 ### Bug Fixes
