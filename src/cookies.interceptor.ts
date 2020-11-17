@@ -17,7 +17,9 @@ export class CookiesInterceptor implements NestInterceptor {
         const cookieStrings: string[] = [];
         req._cookies?.forEach((cookie: Cookie) => {
           let optionString = '';
-          for (const [option = '', value] of Object.entries(cookie.options)) {
+          for (const [option = '', value] of Object.entries(
+            cookie.options ?? {},
+          )) {
             switch (option) {
               case 'expires':
                 optionString += `Expires=${(value as Date).toUTCString()}`;
