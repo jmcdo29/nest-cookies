@@ -9,13 +9,13 @@ import { GqlCookieInterceptor } from './graphql-cookie.interceptor';
 export class AppResolver {
   constructor(private readonly appService: AppService) {}
   @Query(() => String)
-  sayHello(@Context() ctx: { req: NestCookieRequest }): string {
+  sayHello(@Context() ctx: { req: NestCookieRequest<unknown> }): string {
     console.log(ctx.req.cookies);
     return this.appService.getHello();
   }
 
   @Query(() => String)
-  addCookie(@Context() ctx: { req: NestCookieRequest }): string {
+  addCookie(@Context() ctx: { req: NestCookieRequest<unknown> }): string {
     const expires = new Date();
     expires.setDate(expires.getDate() + 1);
     ctx.req._cookies = [

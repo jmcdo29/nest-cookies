@@ -1,6 +1,3 @@
-import { Request } from 'express';
-import { FastifyRequest } from 'fastify';
-
 export interface Cookie {
   name: string;
   value: any;
@@ -15,14 +12,7 @@ export interface Cookie {
   };
 }
 
-export interface ExpressCookieRequest extends Request {
+export type NestCookieRequest<T> = T & {
   _cookies: Cookie[];
   cookies: Record<string, string>;
-}
-
-export interface FastifyCookieRequest extends FastifyRequest {
-  _cookies: Cookie[];
-  cookies: Record<string, string>;
-}
-
-export type NestCookieRequest = ExpressCookieRequest | FastifyCookieRequest;
+};
