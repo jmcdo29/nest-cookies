@@ -54,7 +54,7 @@
     "eslint-plugin-import": "^2.20.1",
     "fastify": "^3.3.0",
     "graphql": "^15.3.0",
-    "graphql-tools": "^6.2.2",
+    "graphql-tools": "^7.0.1",
     "husky": "^4.3.0",
     "jest": "26.0.1",
     "lint-staged": "^10.3.0",
