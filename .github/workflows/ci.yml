@@ -17,7 +17,7 @@ jobs:
         with:
           version: 5
       - name: install deps
-        run: pnpm install -s
+        run: pnpm install
       - name: build
         run: pnpm build
       - name: Jest
