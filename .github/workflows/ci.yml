@@ -1,0 +1,35 @@
+name: CI
+on:
+  push:
+    branches:
+      - '*'
+  pull_request:
+    branches:
+      - 'main'
+  schedule:
+    - cron: '0 0 * * *'
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: pnpm/action-setup@v1.2.1
+        with:
+          version: 5
+      - name: install deps
+        run: pnpm install -s
+      - name: build
+        run: pnpm build
+      - name: Jest
+        run: pnpm test:e2e
+  auto-merge:
+    needs: build
+    if: contains(github.event.pull_request.user.login, 'dependabot')
+    runs-on: ubuntu-latest
+    steps:
+    - name: automerge
+      uses: "pascalgn/automerge-action@v0.12.0"
+      env:
+        GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+        MERGE_LABELS: ""
+        MERGE_METHOD: rebase
