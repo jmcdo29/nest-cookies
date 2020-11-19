@@ -17,7 +17,7 @@ jobs:
         with:
           version: 5
       - name: install deps
-        run: pnpm install
+        run: pnpm install --frozen-lockfile=false
       - name: build
         run: pnpm build
       - name: Jest
