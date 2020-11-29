@@ -10,6 +10,8 @@
 
 A module for adding cookie support for both Fastify and Express adapters for NestJS. There's a bit of magic that goes on under the hood when it comes to binding the cookie parser, but this module uses nothing except for what Nest itself provides, meaning no extra middleware, no extra functions, just plain, simple code. Depending on if the Fastify adapter is being used or the Express one, a request hook is added or a middleware is setup. This is for parsing incoming cookies from the `Cookie` header to make them available. And unlike using Nest middleware on the Fastify Adapter, by using a request hook we are able to keep the `req.cookies` on the top level regardless of the adapter. :fireworks:
 
+**As of Nest version [7.5.3](https://github.com/nestjs/nest/commit/55d7b0e890be4a80ef3e6b9b60041915b49fecd0), `@Res()` can now take in a parameter of `{ passthrough: true }` which will allow Nest to still handle sending the response, while allows devs to use `@Res()` to get the response object so that cookies and headers can be set. This means cookie middleware that already works for Express and Fastify work for Nest in the same way. [You can read more about it on Nest's docs site.](https://docs.nestjs.com/techniques/cookies)**
+
 ## Installation
 
 To install the package, use your package manager of choice and install `nest-cookies`
