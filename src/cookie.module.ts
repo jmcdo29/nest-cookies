@@ -48,7 +48,7 @@ export class CookieModule implements OnModuleInit, NestModule {
       .filter(cookie => !!cookie)
       .forEach((cookie: string) => {
         const [cookieName, cookieValue] = cookie.split('=');
-        req.cookies[cookieName] = cookieValue;
+        req.cookies[cookieName] = decodeURIComponent(cookieValue);
       });
     next();
   }
