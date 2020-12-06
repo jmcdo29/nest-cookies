@@ -3,10 +3,19 @@ import { INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
 import { AppModule } from './app.module';
 
+const UTCRegex =
+  '\\w{3},\\s\\d{2}\\s\\w{3}\\s\\d{4}\\s\\d{2}:\\d{2}:\\d{2}\\sGMT';
+
 const cookieString = () => {
   const tomorrow = new Date();
   tomorrow.setDate(tomorrow.getDate() + 1);
-  return `cookie1=hasExpires; Max-Age=86400; HttpOnly; Expires=${tomorrow.toUTCString()};,cookie2=noExpires; Max-Age=86400; HttpOnly;,cookie3=hasDomain; Domain=localhost;,cookie4=path; Path=/;,cookie5=hasSameSite; SameSite=None;`;
+  return [
+    `cookie1=hasExpires; Max-Age=86400; HttpOnly; Expires=${UTCRegex};`,
+    'cookie2=noExpires; Max-Age=86400; HttpOnly;',
+    'cookie3=hasDomain; Domain=localhost;',
+    'cookie4=path; Path=/;',
+    'cookie5=hasSameSite; SameSite=None;',
+  ].map(s => expect.stringMatching(s));
 };
 
 const expectedCookie = {
@@ -46,7 +55,11 @@ describe('AppController (e2e)', () => {
         .get('/add-cookie')
         .expect(200)
         .expect('done')
-        .expect('set-cookie', cookieString());
+        .expect(({ headers }) => {
+          expect(headers['set-cookie']).toEqual(
+            expect.arrayContaining(cookieString()),
+          );
+        });
     });
 
     it('/ (GET)', () => {
@@ -89,10 +102,14 @@ describe('AppController (e2e)', () => {
     it('addCookie', () => {
       return request(app.getHttpServer())
         .post('/graphql')
-        .send({query: '{ addCookie }'})
+        .send({ query: '{ addCookie }' })
         .expect(200)
         .expect({ data: { addCookie: 'done' } })
-        .expect('set-cookie', cookieString());
+        .expect(({ headers }) => {
+          expect(headers['set-cookie']).toEqual(
+            expect.arrayContaining(cookieString()),
+          );
+        });
     });
     it('sayHello', () => {
       return request(app.getHttpServer())
@@ -106,7 +123,7 @@ describe('AppController (e2e)', () => {
           'cookie5=hasSameSite',
         ])
         .expect(200)
-        .expect({ data: { sayHello: 'Hello World!' }})
+        .expect({ data: { sayHello: 'Hello World!' } })
         .expect(() => {
           expect(gqlLogSpy).toBeCalledTimes(1);
           expect(gqlLogSpy).toBeCalledWith(expectedCookie);
@@ -115,9 +132,9 @@ describe('AppController (e2e)', () => {
     it('noCookie', () => {
       return request(app.getHttpServer())
         .post('/graphql')
-        .send({ query: '{ sayHello }'})
+        .send({ query: '{ sayHello }' })
         .expect(200)
-        .expect({ data: { sayHello: 'Hello World!' }}) 
+        .expect({ data: { sayHello: 'Hello World!' } })
         .expect(res => {
           expect(res.headers['set-cookie']).toBeFalsy();
           expect(gqlLogSpy).toBeCalledTimes(1);

@@ -14,48 +14,45 @@ export class CookiesInterceptor implements NestInterceptor {
     const { req, res } = this.getRequestResponse(context);
     return next.handle().pipe(
       tap(() => {
-        const cookieStrings: string[] = [];
-        req._cookies?.forEach((cookie: Cookie) => {
-          let optionString = '';
-          for (const [option = '', value] of Object.entries(
-            cookie.options ?? {},
-          )) {
-            switch (option) {
-              case 'expires':
-                optionString += `Expires=${(value as Date).toUTCString()}`;
-                break;
-              case 'maxAge':
-                optionString += `Max-Age=${value}`;
-                break;
-              case 'domain':
-                optionString += `Domain=${value}`;
-                break;
-              case 'path':
-                optionString += `Path=${value}`;
-                break;
-              case 'secure':
-                optionString += `Secure`;
-                break;
-              case 'httpOnly':
-                optionString += 'HttpOnly';
-                break;
-              case 'sameSite':
-                optionString += `SameSite=${value}`;
-                break;
-              default:
-                break;
-            }
-            optionString += '; ';
-          }
-          cookieStrings.push(
-            `${cookie.name}=${encodeURIComponent(
-              cookie.value,
-            )}; ${optionString.trim()}`,
-          );
-        });
+        const cookieStrings: string[] = req._cookies?.map(this.parseCookie);
         res.header('Set-Cookie', cookieStrings);
       }),
     );
+  }
+
+  public parseCookie(cookie: Cookie): string {
+    let optionString = '';
+    for (const [option = '', value] of Object.entries(cookie.options ?? {})) {
+      switch (option) {
+        case 'expires':
+          optionString += `Expires=${(value as Date).toUTCString()}`;
+          break;
+        case 'maxAge':
+          optionString += `Max-Age=${value}`;
+          break;
+        case 'domain':
+          optionString += `Domain=${value}`;
+          break;
+        case 'path':
+          optionString += `Path=${value}`;
+          break;
+        case 'secure':
+          optionString += `Secure`;
+          break;
+        case 'httpOnly':
+          optionString += 'HttpOnly';
+          break;
+        case 'sameSite':
+          optionString += `SameSite=${value}`;
+          break;
+        default:
+          break;
+      }
+      optionString += '; ';
+    }
+    return `${cookie.name}=${encodeURIComponent(
+      cookie.value,
+    )}; ${optionString.trim()}`;
   }
 
   public getRequestResponse(
