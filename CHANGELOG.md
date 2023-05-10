@@ -1,3 +1,12 @@
+# [1.3.0](https://github.com/jmcdo29/nest-cookies/compare/v1.2.2...v1.3.0) (2023-05-10)
+
+
+### Features
+
+* update e2e test for new nest format and support newer nest versions ([523b20c](https://github.com/jmcdo29/nest-cookies/commit/523b20cdfb0b1859ddce50dd3ad10ec971fe8894))
+
+
+
 ## [1.2.1](https://github.com/jmcdo29/nest-cookies/compare/v1.2.0...v1.2.1) (2020-11-17)
 
 ### Bug Fixes
