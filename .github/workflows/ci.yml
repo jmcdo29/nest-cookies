@@ -12,10 +12,10 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
-      - uses: pnpm/action-setup@v1.2.1
+      - uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v2.2.4
         with:
-          version: 5
+          version: 8
       - name: install deps
         run: pnpm install --frozen-lockfile=false
       - name: build
