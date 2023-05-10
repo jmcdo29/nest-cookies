@@ -9,13 +9,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
       - name: PNPM Install
-        uses: pnpm/action-setup@v1.2.1
+        uses: pnpm/action-setup@v2.2.4
         with:
-          version: 5
+          version: 8
       - name: Install Deps
         run: pnpm install --frozen-lockfile=false
       - name: Release
