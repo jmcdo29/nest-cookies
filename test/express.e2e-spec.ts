@@ -1,5 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
+import { ApolloDriver } from '@nestjs/apollo';
 import * as request from 'supertest';
 import { AppModule } from './app.module';
 
@@ -15,7 +16,7 @@ const cookieString = () => {
     'cookie3=hasDomain; Domain=localhost;',
     'cookie4=path; Path=/;',
     'cookie5=hasSameSite; SameSite=None;',
-  ].map(s => expect.stringMatching(s));
+  ].map((s) => expect.stringMatching(s));
 };
 
 const expectedCookie = {
@@ -33,6 +34,7 @@ describe('AppController (e2e)', () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
       imports: [
         AppModule.forGraphQL({
+          driver: ApolloDriver,
           context: ({ req, res }) => ({ req, res }),
         }),
       ],
@@ -84,7 +86,7 @@ describe('AppController (e2e)', () => {
         .get('/')
         .expect(200)
         .expect('Hello World!')
-        .expect(res => {
+        .expect((res) => {
           expect(res.headers['set-cookie']).toBeFalsy();
           expect(restLogSpy).toBeCalledTimes(1);
           expect(restLogSpy).toBeCalledWith({});
@@ -135,7 +137,7 @@ describe('AppController (e2e)', () => {
         .send({ query: '{ sayHello }' })
         .expect(200)
         .expect({ data: { sayHello: 'Hello World!' } })
-        .expect(res => {
+        .expect((res) => {
           expect(res.headers['set-cookie']).toBeFalsy();
           expect(gqlLogSpy).toBeCalledTimes(1);
           expect(gqlLogSpy).toBeCalledWith({});

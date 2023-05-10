@@ -3,6 +3,7 @@ import {
   FastifyAdapter,
   NestFastifyApplication,
 } from '@nestjs/platform-fastify';
+import { MercuriusDriver } from '@nestjs/mercurius';
 import { AppModule } from './app.module';
 
 const expectedCookie = {
@@ -51,7 +52,10 @@ describe('AppController Fastify (e2e)', () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
       imports: [
         AppModule.forGraphQL({
-          context: ({ request, reply }) => ({ req: request, res: reply }),
+          driver: MercuriusDriver,
+          context: (request, reply) => {
+            return { req: request, res: reply };
+          },
         }),
       ],
     }).compile();

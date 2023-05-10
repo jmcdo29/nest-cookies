@@ -55,9 +55,7 @@ export class CookiesInterceptor implements NestInterceptor {
     )}; ${optionString.trim()}`;
   }
 
-  public getRequestResponse(
-    context: ExecutionContext,
-  ): {
+  public getRequestResponse(context: ExecutionContext): {
     req: NestCookieRequest<unknown>;
     res: { header: (key: string, value: string[]) => void };
   } {
