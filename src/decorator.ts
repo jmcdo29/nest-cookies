@@ -10,3 +10,8 @@ export const Cookies = createParamDecorator(
     return req.cookies;
   },
 );
+
+export const NewCookies = createParamDecorator(
+  (_data: never, context: ExecutionContext) =>
+    context.switchToHttp().getRequest<NestCookieRequest<{}>>()._cookies,
+);
